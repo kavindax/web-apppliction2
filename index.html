@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angle Selector with React CDN</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .slider {
+            width: 300px;
+        }
+        .radio-group {
+            display: flex;
+            justify-content: space-around;
+            width: 400px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<!-- React and ReactDOM CDN -->
+<script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+
+<!-- Babel CDN for JSX support -->
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<script type="text/babel">
+    const { useState } = React;
+
+    function AngleSelector() {
+        const [angle, setAngle] = useState(0);
+
+        const handleInputChange = (e) => {
+            let value = parseInt(e.target.value, 10);
+            if (isNaN(value)) value = 0;
+            if (value < 0) value = 0;
+            if (value > 360) value = 360;
+            setAngle(value);
+        };
+
+        const handleSliderChange = (e) => {
+            setAngle(parseInt(e.target.value, 10));
+        };
+
+        const handleRadioChange = (e) => {
+            setAngle(parseInt(e.target.value, 10));
+        };
+
+        return (
+            <div className="container">
+                <input
+                    type="number"
+                    id="angleInput"
+                    min="0"
+                    max="360"
+                    value={angle}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="range"
+                    id="angleSlider"
+                    className="slider"
+                    min="0"
+                    max="360"
+                    value={angle}
+                    onChange={handleSliderChange}
+                />
+                <div className="radio-group">
+                    <label>
+                        <input
+                            type="radio"
+                            name="angle"
+                            value="0"
+                            checked={angle === 0}
+                            onChange={handleRadioChange}
+                        />
+                        0°
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="angle"
+                            value="45"
+                            checked={angle === 45}
+                            onChange={handleRadioChange}
+                        />
+                        45°
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="angle"
+                            value="60"
+                            checked={angle === 60}
+                            onChange={handleRadioChange}
+                        />
+                        60°
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="angle"
+                            value="90"
+                            checked={angle === 90}
+                            onChange={handleRadioChange}
+                        />
+                        90°
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="angle"
+                            value="180"
+                            checked={angle === 180}
+                            onChange={handleRadioChange}
+                        />
+                        180°
+                    </label>
+                </div>
+            </div>
+        );
+    }
+
+    ReactDOM.render(<AngleSelector />, document.getElementById('root'));
+</script>
+
+</body>
+</html>
